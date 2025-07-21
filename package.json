@@ -1,0 +1,43 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "main": "main.js",
+  "build": {
+    "appId": "com.saksham.voidsh",
+    "productName": "voidsh",
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    }
+  },
+  "scripts": {
+    "pack": "electron-builder --dir",
+    "dev": "vite --host & electron .",
+    "build": "vite build",
+    "start": "electron .",
+    "dist": "vite build && electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "description": "",
+  "dependencies": {
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/xterm": "^5.5.0"
+  },
+  "devDependencies": {
+    "electron": "^37.2.3",
+    "electron-builder": "^26.0.12",
+    "vite": "^7.0.5"
+  }
+}
