@@ -1,14 +1,15 @@
 {
-  "name": "ui",
+  "name": "voidsh",
   "version": "1.0.0",
-  "main": "main.js",
+  "type": "module",
+  "main": "platform/main.js",
   "build": {
     "appId": "com.saksham.voidsh",
     "productName": "voidsh",
     "files": [
-      "dist/**/*",
-      "main.js",
-      "preload.js",
+      "platform/**/*",
+      "core/**/*",
+      "ui/**/*",
       "package.json"
     ],
     "directories": {
@@ -21,15 +22,14 @@
   },
   "scripts": {
     "pack": "electron-builder --dir",
-    "dev": "vite --host & electron .",
-    "build": "vite build",
+    "dev": "vite --host --config ui/vite.config.js & electron .",
+    "build": "vite build --config ui/vite.config.js",
     "start": "electron .",
-    "dist": "vite build && electron-builder"
+    "dist": "vite build --config ui/vite.config.js && electron-builder"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "description": "",
   "dependencies": {
     "@xterm/addon-fit": "^0.10.0",

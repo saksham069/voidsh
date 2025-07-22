@@ -28,7 +28,7 @@ function createWindow() {
     win.loadURL("http://localhost:5173");
     win.webContents.openDevTools();
   } else {
-    win.loadFile(join(__dirname, "dist", "index.html"));
+    win.loadFile(join(__dirname, "../dist/ui/src", "index.html"));
 
     // disable devtools
     win.webContents.on("devtools-opened", () => {
