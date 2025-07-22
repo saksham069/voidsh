@@ -136,3 +136,84 @@ input:checked + .slider:before {
   scrollbar-width: thin;
   scrollbar-color: rgba(59, 130, 246, 0.4) transparent;
 }
+
+/* setting styles */
+#settings-icon {
+  margin-left: auto;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #ccc;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+#settings-icon > svg:hover {
+  transform: rotate(45deg);
+  color: #fff;
+}
+
+#settings-page {
+  display: none;
+  opacity: 0.9;
+  position: fixed;
+  inset: 0;
+  background-color: #0d0d0d;
+  color: #fff;
+  z-index: 999;
+  padding: 2rem;
+  flex-direction: column;
+  font-family: monospace;
+  animation: fadeIn 0.3s ease;
+}
+
+#settings-page.active {
+  display: flex;
+}
+
+#settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #333;
+  padding-bottom: 1rem;
+}
+
+#settings-content label {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: #ccc;
+}
+
+#settings-content select {
+  width: 20rem;
+  margin-top: 0.5rem;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-family: inherit;
+}
+
+#close-settings {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+#close-settings:hover {
+  color: #f55;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 0.9; transform: scale(1); }
+}
