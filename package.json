@@ -1,8 +1,18 @@
 {
   "name": "voidsh",
   "version": "1.0.0",
+  "description": "Electron + Vite terminal app with a built-in LLM",
+  "author": "Saksham <sakshamarorax02@gmail.com>",
+  "license": "ISC",
   "type": "module",
   "main": "platform/main.js",
+  "scripts": {
+    "dev": "concurrently \"vite --host --config ui/vite.config.js\" \"electron .\"",
+    "build": "vite build --config ui/vite.config.js",
+    "start": "electron .",
+    "dist": "npm run build && electron-builder",
+    "rebuild": "electron-rebuild -f -w node-pty"
+  },
   "build": {
     "appId": "com.saksham.voidsh",
     "productName": "voidsh",
@@ -13,31 +23,39 @@
       "package.json"
     ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "assets",
+      "output": "release"
     },
     "win": {
-      "target": "nsis",
-      "icon": "assets/icon.ico"
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.utilities"
     }
   },
-  "scripts": {
-    "pack": "electron-builder --dir",
-    "dev": "vite --host --config ui/vite.config.js & electron .",
-    "build": "vite build --config ui/vite.config.js",
-    "start": "electron .",
-    "dist": "vite build --config ui/vite.config.js && electron-builder"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "@xterm/addon-fit": "^0.10.0",
-    "@xterm/xterm": "^5.5.0"
+    "@xterm/xterm": "^5.5.0",
+    "node-pty": "^1.0.0"
   },
   "devDependencies": {
-    "electron": "^37.2.3",
+    "concurrently": "^9.2.0",
+    "electron": "^37.3.1",
     "electron-builder": "^26.0.12",
-    "vite": "^7.0.5"
+    "vite": "^7.1.3"
   }
 }

@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import { join } from "path";
 import { fileURLToPath } from "url";
+import { createPtyProcess } from "../core/terminal-pty.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, "..");
@@ -24,22 +25,25 @@ function createWindow() {
   // hide menu bar
   win.setMenuBarVisibility(false);
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === "dev") {
     win.loadURL("http://localhost:5173");
     win.webContents.openDevTools();
   } else {
-    win.loadFile(join(__dirname, "../dist/ui/src", "index.html"));
-
-    // disable devtools
-    win.webContents.on("devtools-opened", () => {
-      win.webContents.closeDevTools();
-    });
-
-    // prevent any new window from opening
-    win.webContents.setWindowOpenHandler(() => {
-      return { action: "deny" };
-    });
+    win.loadFile(join(__dirname, "../ui/src", "index.html"));
   }
+
+  // init pty process
+  const ptyProcess = createPtyProcess();
+
+  // send pty output to renderer
+  ptyProcess.onData((data) => {
+    win.webContents.send("terminal:data", data);
+  });
+
+  // receive input from renderer and send to pty
+  ipcMain.on("terminal:write", (_, input) => {
+    ptyProcess.write(input);
+  });
 }
 
 app.whenReady().then(() => {
